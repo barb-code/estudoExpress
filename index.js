@@ -11,15 +11,12 @@ const projects = [];
 // console.log(app);
 
 app.get('/projects', (request, response) => {
-    const {title, owner} = request.query;
+    //const {title, owner} = request.query;
 
-    console.log(title);
-    console.log(owner);
+   // console.log(title);
+   // console.log(owner);
 
-    return response.json([
-        'Projeto 1',
-        'Projeto 2'
-    ]);
+    return response.json(projects);
 });
 
 app.post('/projects', (request, response) => {

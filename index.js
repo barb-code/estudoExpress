@@ -30,24 +30,42 @@ app.post('/projects', (request, response) => {
 });
 
 app.put('/projects/:id', (request, response) => {
-    const params = request.params;
+    const {id} = request.params;
+    const { title, owner } = request.body
 
-    console.log(params);
+    const projectIndex = projects.findIndex(project => project.id === id)
     
-    return response.json([
-        'Projeto 500',
-        'Projeto 2',
-        'Projeto 3',
-        'Projeto 4',
-        'Projeto 5'
-    ]);
+    if (projectIndex < 0) {
+        return response.status(400).json({ error: 'Projeto não foi encontrado'});
+    }
+    
+    const project ={
+        id,
+        title,
+        owner
+    }
+
+    projects[projectIndex] = project;
+
+    //console.log(params);
+    
+    return response.json(project);
+
 });
 
 app.delete('/projects/:id', (request, response) => {
-    return response.json([
-        'Projeto 500',
-        'Projeto 2'
-    ]);
+    const {id} = request.params
+
+    const projectIndex = projects.findIndex(project => project.id === id)
+    
+    if (projectIndex < 0) {
+        return response.status(400).json({ error: 'Projeto não foi encontrado'});
+    }
+    
+    
+    projects.splice(projectIndex, 1)
+
+    return response.status(204).send()
 });
 
 app.listen(3000, () => {
